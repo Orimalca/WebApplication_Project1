@@ -116,16 +116,72 @@ let ads = [
 ];
 
 //////////////////////////////////////////////
+let date = new Date();
+let applicableAds = new Array();
+let timeout = 2000;
+let timeSet = timeout;
+let adIndex = -1;
 
 $( document ).ready(function() {
 
-    setInterval(() => {
-        let date = new Date();
-        let nowDay_num = date.getDay();
-        let nowDay_str;
-        let nowHour = date.getHours();
+    let date = new Date();
 
-        switch (nowDay_num) {
+    console.log(date.getDay())
+    console.log(date.getDay() in ads[0].days)
+
+    timeout = setInterval(showAds,timeout)
+    /*setInterval((handler,interval) => {
+
+
+    }, timeout);*/
+
+});
+
+function showAds() {
+    console.log("change: " + timeSet);
+    let nowDay_num = date.getDay();
+    let nowDay_str;
+
+    switch (nowDay_num) {
+        case 0: nowDay_str = 'sunday'; break;
+        case 1: nowDay_str = 'monday'; break;
+        case 2: nowDay_str = 'tuesday'; break;
+        case 3: nowDay_str = 'wednesday'; break;
+        case 4: nowDay_str = 'thursday'; break;
+        case 5: nowDay_str = 'friday'; break;
+        case 6: nowDay_str = 'saturday'; break;
+    }
+    ads.forEach(ad => {
+        if(nowDay_str in ad.days || ad.days.all == true ) {
+            const from_date = new Date(ad.fromDate);
+            const to_date = new Date(ad.toDate);
+
+            if ((from_date <= date && date <= to_date)) {
+                if(!(ad in applicableAds))
+                    applicableAds[applicableAds.length] = ad;
+            } else if (ad in applicableAds) {
+                applicableAds.remove(ad);
+            }
+        }
+    });
+
+    clearInterval(timeout);
+    if(applicableAds.length > 0){
+        adIndex = (adIndex + 1) % applicableAds.length;
+        $('#main_div').load('/' + applicableAds[adIndex].templateUrl);
+        timeSet = applicableAds[adIndex].timeDuration * 1000;
+        timeout = setInterval(showAds,timeSet);
+    } else {
+        timeSet = 2000;
+        timeout = setInterval(showAds,timeSet);
+    }
+}
+
+        /*let nowDay_num = date.getDay();
+        let nowDay_str;
+        let nowHour = date.getHours();*/
+
+        /*switch (nowDay_num) {
             case 0: nowDay_str = 'sunday'; break;
             case 1: nowDay_str = 'monday'; break;
             case 2: nowDay_str = 'tuesday'; break;
@@ -133,12 +189,13 @@ $( document ).ready(function() {
             case 4: nowDay_str = 'thursday'; break;
             case 5: nowDay_str = 'friday'; break;
             case 6: nowDay_str = 'saturday'; break;
-        }
+        }*/
 
-        ads.forEach(ad => {
+        /*ads.forEach(ad => {
             const from_date = new Date(ad.fromDate);
             const to_date = new Date(ad.toDate);
-            if (!(from_date <= date && date <= to_date)) return; // emulating JavaScript forEach continue statement (same as continue)
+            // emulating JavaScript forEach continue statement (same as continue)
+            if (!(from_date <= date && date <= to_date)) return;
 
             let ad_days = ad.days;
             let ad_duration = ad.timeDuration * 1000;
@@ -153,7 +210,7 @@ $( document ).ready(function() {
                     console.log("abcdef");
                     console.log(day+':'+time)
                 }
-                /*
+                /!*
                 if (day == nowDay_str
                     && time.fromHour <= nowHour
                     && nowHour <= time.toHour
@@ -161,16 +218,16 @@ $( document ).ready(function() {
 
                     $('#main_div').load('/' + ad.templateUrl)
                 }
-                */
+                *!/
 
-            }
-
-
-        });
-    }, 2000);
+            }*/
 
 
-});
+    /*    });
+    }, 2000);*/
+
+
+//});
 
 
 /*

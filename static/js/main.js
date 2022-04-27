@@ -1,8 +1,5 @@
 "use strict"
 
-$( document ).ready(function() {
-  console.log( "ready!" );
-
 
 
 class Ad {
@@ -21,12 +18,12 @@ class Ad {
 
 
 let ads = [
-    new Ad({
-        name: "one",
-        templateUrl: "templates/templateA.html",
-        texts: ["text1", "text2", "text3", "text4"],
-        imagesUrl: ["images/img1.jpg", "images/img2.jpg"],
-        days: {
+    new Ad(
+        "one",
+        "templates/temp_A.html",
+        ["text1", "text2", "text3", "text4"],
+        ["images/img1.jpg", "images/img2.jpg"],
+        {
             monday: {
                 fromHour: 6,
                 toHour: 12
@@ -37,17 +34,17 @@ let ads = [
             }
         },
 
-        fromDate: "1/1/2017",
-        toDate: "12/31/2017",
-        timeDuration: 3,
-        screens: {"1": true, "2": true}
-    }),
-    new Ad({
-        name: "two",
-        templateUrl: "templates/templateB.html",
-        texts: ["text1", "text2", "text3", "text4", "text5", "text6", "text7", "text8", "text9", "text10"],
-        imagesUrl: ["images/img1.jpg"],
-        days: {
+        "2022-04-01",
+        "2022-04-31",
+        3,
+        {"1": true, "2":true}
+    ),
+    new Ad(
+        "two",
+        "templates/temp_B.html",
+        ["text1", "text2", "text3", "text4", "text5", "text6", "text7", "text8", "text9", "text10"],
+        ["images/img1.jpg"],
+        {
             tuesday: {
                 fromHour: 10,
                 toHour: 16
@@ -57,48 +54,48 @@ let ads = [
                 toHour: 16
             }
         },
-        fromDate: "3/1/2017",
-        toDate: "4/31/2017",
-        timeDuration: 5,
-        screens: {"1": true, "3": true}
-    }),
-    new Ad({
-        name: "three",
-        templateUrl: "templates/templateC.html",
-        texts: [],
-        imagesUrl: [],
-        days: {
+        "2022-04-20",
+        "2022-04-31",
+        5,
+        {"1": true, "3": true}
+    ),
+    new Ad(
+        "three",
+        "templates/temp_C.html",
+        [],
+        [],
+        {
             all: true,
             fromHour: 8,
             toHour: 22
         },
-        fromDate: "5/1/2017",
-        toDate: "6/15/2017",
-        timeDuration: 7,
-        screens: {"2": true, "3": true}
-    }),
-    new Ad({
-        name: "four",
-        templateUrl: "templates/templateA.html",
-        texts: ["text1", "text2"],
-        imagesUrl: [],
-        days: {
+        "2022-04-26",
+        "2022-05-01",
+        7,
+        {"2": true, "3": true}
+    ),
+    new Ad(
+        "four",
+        "templates/temp_A.html",
+        ["text1", "text2"],
+        [],
+        {
             monday: {
                 fromHour: 6,
                 toHour: 12
             }
         },
-        fromDate: "3/29/2017",
-        toDate: "4/15/2017",
-        timeDuration: 4,
-        screens: {"1": true}
-    }),
-    new Ad({
-        name: "five",
-        templateUrl: "templates/templateB.html",
-        texts: ["text1", "text2", "text3", "text4", "text5", "text6", "text7"],
-        imagesUrl: ["images/img1.jpg", "images/img2.jpg"],
-        days: {
+        "2022-04-27",
+        "2022-04-28",
+        4,
+        {"1": true}
+    ),
+    new Ad(
+        "five",
+        "templates/temp_B.html",
+        ["text1", "text2", "text3", "text4", "text5", "text6", "text7"],
+        ["images/img1.jpg", "images/img2.jpg"],
+        {
               monday: {
                 fromHour: 1,
                 toHour: 23,
@@ -111,51 +108,71 @@ let ads = [
             }
         },
 
-        fromDate: "4/1/2017",
-        toDate: "4/31/2017",
-        timeDuration: 6,
-        screens: {"3": true}
-    })
+        "2022-04-27",
+        "2022-04-31",
+        6,
+        {"3": true}
+    )
 ];
 
 //////////////////////////////////////////////
 
-let image = document.getElementById('ad_1');
+$( document ).ready(function() {
 
-while(true){
-  
-  let date = new Date();
-  let nowDay_num = date.getDay();
-  let nowDay_str;
-  let nowHour = date.getHours(); 
+    setInterval(() => {
+        let date = new Date();
+        let nowDay_num = date.getDay();
+        let nowDay_str;
+        let nowHour = date.getHours();
 
-  switch(nowDay_num) {
-    case 0: nowDay_str = 'sunday'; break;
-    case 1: nowDay_str = 'monday'; break;
-    case 2: nowDay_str = 'tuesday'; break;
-    case 3: nowDay_str = 'wednesday'; break;
-    case 4: nowDay_str = 'thursday'; break;
-    case 5: nowDay_str = 'friday'; break;      
-    case 6: nowDay_str = 'saterday'; break;
-  }
+        switch (nowDay_num) {
+            case 0: nowDay_str = 'sunday'; break;
+            case 1: nowDay_str = 'monday'; break;
+            case 2: nowDay_str = 'tuesday'; break;
+            case 3: nowDay_str = 'wednesday'; break;
+            case 4: nowDay_str = 'thursday'; break;
+            case 5: nowDay_str = 'friday'; break;
+            case 6: nowDay_str = 'saturday'; break;
+        }
 
-  
+        ads.forEach(ad => {
+            const from_date = new Date(ad.fromDate);
+            const to_date = new Date(ad.toDate);
+            if (!(from_date <= date && date <= to_date)) return; // emulating JavaScript forEach continue statement (same as continue)
 
-  ads.forEach(ad => {
-    let ad_days = ad.days;
-    let ad_duration = ad.timeDuration * 1000;
-    let day_found = false
-    let start_date = new Date(ad.fromDate);
-    let end_date = new Date(ad.toDate);
+            let ad_days = ad.days;
+            let ad_duration = ad.timeDuration * 1000;
+            let day_found = false
 
-    if(!(start_date <= date && date <= end_date)) continue;
+            for (const [day, time] of Object.entries(ad.days)) {
+                console.log(day+"\n")
+                // console.log(hours+"\n")
+                console.log(time.fromHour+"\n")
 
-    days.forEach(day => {
-      if(day.name == nowDay_str && day.fromHour <= nowHour && nowHour <= day.toHour ){
-          
-      }
-    })
-render
+                if('all' in ad.days) {
+                    console.log("abcdef");
+                    console.log(day+':'+time)
+                }
+                /*
+                if (day == nowDay_str
+                    && time.fromHour <= nowHour
+                    && nowHour <= time.toHour
+                ) {
+
+                    $('#main_div').load('/' + ad.templateUrl)
+                }
+                */
+
+            }
+
+
+        });
+    }, 2000);
+
+
+});
+
+
 /*
 if (w <=920 && w > 480){
       setInterval(() => {
@@ -165,19 +182,4 @@ if (w <=920 && w > 480){
         card.style = "width: 35rem; height: 35rem;"
       }, 2000);
     }
-    
-  */
-    
-    
-  });
-
-
-
-
-}
-
-});
-
-
-
-
+*/

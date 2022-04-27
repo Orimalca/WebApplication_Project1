@@ -126,14 +126,10 @@ $( document ).ready(function() {
 
     let date = new Date();
 
-    console.log(date.getDay())
-    console.log(date.getDay() in ads[0].days)
+    console.log(date.getDay());
+    console.log(date.getDay() in ads[0].days);
 
-    timeout = setInterval(showAds,timeout)
-    /*setInterval((handler,interval) => {
-
-
-    }, timeout);*/
+    timeout = setInterval(showAds,timeout);
 
 });
 

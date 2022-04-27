@@ -152,13 +152,19 @@ function showAds() {
         case 6: nowDay_str = 'saturday'; break;
     }
     ads.forEach(ad => {
-        if(nowDay_str in ad.days || ad.days.all == true ) {
+        if (nowDay_str in ad.days || ad.days.all == true) {
             const from_date = new Date(ad.fromDate);
             const to_date = new Date(ad.toDate);
 
             if ((from_date <= date && date <= to_date)) {
-                if(!(ad in applicableAds))
-                    applicableAds[applicableAds.length] = ad;
+                if (ad.days.fromHour <= date.getHours()
+                    && date.getHours() <= ad.days.toHour) {
+                    if (!(ad in applicableAds)) {
+                        applicableAds[applicableAds.length] = ad;
+                    }
+                } else if (ad in applicableAds) {
+                    applicableAds.remove(ad);
+                }
             } else if (ad in applicableAds) {
                 applicableAds.remove(ad);
             }

@@ -63,11 +63,12 @@ let ads = [
         "three",
         "templates/temp_C.html",
         [],
-        [],
+        ['/static/assets/img1.png', ],
         {
-            all: true,
-            fromHour: 8,
-            toHour: 22
+            all: {
+                fromHour: 8,
+                toHour: 22
+            }
         },
         "2022-04-26",
         "2022-05-01",
@@ -117,7 +118,7 @@ let ads = [
 
 //////////////////////////////////////////////
 
-$( document ).ready(function() {
+$( document ).ready(() => {
 
     setInterval(() => {
         let date = new Date();
@@ -145,23 +146,13 @@ $( document ).ready(function() {
             let day_found = false
 
             for (const [day, time] of Object.entries(ad.days)) {
-                console.log(day+"\n")
-                // console.log(hours+"\n")
-                console.log(time.fromHour+"\n")
-
-                if('all' in ad.days) {
-                    console.log("abcdef");
-                    console.log(day+':'+time)
-                }
-                /*
-                if (day == nowDay_str
-                    && time.fromHour <= nowHour
-                    && nowHour <= time.toHour
+                if((day == 'all' || day == nowDay_str)
+                    && (time.fromHour <= nowHour && nowHour <= time.toHour)
                 ) {
-
                     $('#main_div').load('/' + ad.templateUrl)
                 }
-                */
+
+
 
             }
 

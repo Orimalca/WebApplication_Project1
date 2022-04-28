@@ -149,10 +149,7 @@ let adIndex = -1;
 const iframe = document.getElementById('main_frame');
 
 $( document ).ready(function() {
-
-    //console.log(date.getDay());
-    //console.log(date.getDay() in ads[0].days);
-
+    
     timeout = setInterval(showAds,timeout);
 
 });
@@ -213,67 +210,3 @@ function showAds() {
         timeout = setInterval(showAds,timeSet);
     }
 }
-
-/*let nowDay_num = date.getDay();
-let nowDay_str;
-let nowHour = date.getHours();*/
-
-/*switch (nowDay_num) {
-    case 0: nowDay_str = 'sunday'; break;
-    case 1: nowDay_str = 'monday'; break;
-    case 2: nowDay_str = 'tuesday'; break;
-    case 3: nowDay_str = 'wednesday'; break;
-    case 4: nowDay_str = 'thursday'; break;
-    case 5: nowDay_str = 'friday'; break;
-    case 6: nowDay_str = 'saturday'; break;
-}*/
-
-/*ads.forEach(ad => {
-    const from_date = new Date(ad.fromDate);
-    const to_date = new Date(ad.toDate);
-    // emulating JavaScript forEach continue statement (same as continue)
-    if (!(from_date <= date && date <= to_date)) return;
-
-    let ad_days = ad.days;
-    let ad_duration = ad.timeDuration * 1000;
-    let day_found = false
-
-    for (const [day, time] of Object.entries(ad.days)) {
-        console.log(day+"\n")
-        // console.log(hours+"\n")
-        console.log(time.fromHour+"\n")
-
-        if('all' in ad.days) {
-            console.log("abcdef");
-            console.log(day+':'+time)
-        }
-        /!*
-        if (day == nowDay_str
-            && time.fromHour <= nowHour
-            && nowHour <= time.toHour
-        ) {
-
-            $('#main_div').load('/' + ad.templateUrl)
-        }
-        *!/
-
-    }*/
-
-
-/*    });
-}, 2000);*/
-
-
-//});
-
-
-/*
-if (w <=920 && w > 480){
-      setInterval(() => {
-        let random = Math.floor(Math.random() * 3);
-        image.src = commercialsMedium[random].src;
-        p.innerHTML = commercialsMedium[random].text;
-        card.style = "width: 35rem; height: 35rem;"
-      }, 2000);
-    }
-*/

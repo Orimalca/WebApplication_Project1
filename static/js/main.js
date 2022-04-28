@@ -149,7 +149,7 @@ let adIndex = -1;
 const iframe = document.getElementById('main_frame');
 
 $( document ).ready(function() {
-    
+
     timeout = setInterval(showAds,timeout);
 
 });

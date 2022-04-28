@@ -63,7 +63,7 @@ let ads = [
         "three",
         "templates/temp_C.html",
         [],
-        ['/static/assets/img1.png', ],
+        ['/static/assets/img1.png', '/static/assets/img5.png'],
         {
             all: {
                 fromHour: 8,
@@ -119,6 +119,7 @@ let ads = [
 //////////////////////////////////////////////
 
 $( document ).ready(() => {
+    let interval_id
 
     setInterval(() => {
         let date = new Date();
@@ -149,7 +150,13 @@ $( document ).ready(() => {
                 if((day == 'all' || day == nowDay_str)
                     && (time.fromHour <= nowHour && nowHour <= time.toHour)
                 ) {
-                    $('#main_div').load('/' + ad.templateUrl)
+                    $('#main_div').load('/' + ad.templateUrl, () => {
+                        interval_id = setInterval(() => {
+                            let random = Math.floor(Math.random() * ad.imagesUrl.length)
+                            $('#tmp_img').attr("src", ad.imagesUrl[random])
+                            //$('#tmp_img').src = ad.imagesUrl[random]
+                        }, 2000);
+                    });
                 }
 
 
@@ -158,7 +165,7 @@ $( document ).ready(() => {
 
 
         });
-    }, 2000);
+    }, 3000);
 
 
 });

@@ -20,17 +20,17 @@ class Ad {
 let ads = [
     new Ad(
         "one",
-        "templates/temp_A.html",
+        "/templates/temp_A.html",
         ["text1", "text2", "text3", "text4"],
         ["images/img1.jpg", "images/img2.jpg"],
         {
             monday: {
-                fromHour: 6,
-                toHour: 12
+                fromHour: '06:00',
+                toHour: '12:00'
             },
             wednesday: {
-                fromHour: 13,
-                toHour: 20
+                fromHour: '13:00',
+                toHour: '20:00'
             }
         },
 
@@ -41,17 +41,17 @@ let ads = [
     ),
     new Ad(
         "two",
-        "templates/temp_B.html",
+        "/templates/temp_B.html",
         ["text1", "text2", "text3", "text4", "text5", "text6", "text7", "text8", "text9", "text10"],
         ["images/img1.jpg"],
         {
             tuesday: {
-                fromHour: 10,
-                toHour: 16
+                fromHour: '10:00',
+                toHour: '16:00'
             },
             wednesday: {
-                fromHour: 10,
-                toHour: 16
+                fromHour: '10:00',
+                toHour: '16:00'
             }
         },
         "2022-04-20",
@@ -61,13 +61,13 @@ let ads = [
     ),
     new Ad(
         "three",
-        "templates/temp_C.html",
+        "/templates/temp_C.html",
         [],
         [],
         {
             all: true,
-            fromHour: 8,
-            toHour: 22
+            fromHour: '08:00',
+            toHour: '22:00'
         },
         "2022-04-26",
         "2022-05-01",
@@ -76,13 +76,13 @@ let ads = [
     ),
     new Ad(
         "four",
-        "templates/temp_A.html",
+        "/templates/temp_A.html",
         ["text1", "text2"],
         [],
         {
             monday: {
-                fromHour: 6,
-                toHour: 12
+                fromHour: '06:00',
+                toHour: '12:00'
             }
         },
         "2022-04-27",
@@ -92,39 +92,63 @@ let ads = [
     ),
     new Ad(
         "five",
-        "templates/temp_B.html",
+        "/templates/temp_B.html",
         ["text1", "text2", "text3", "text4", "text5", "text6", "text7"],
         ["images/img1.jpg", "images/img2.jpg"],
         {
-              monday: {
-                fromHour: 1,
-                toHour: 23,
+            monday: {
+                fromHour: '01:00',
+                toHour: '23:00',
             }, tuesday: {
-                fromHour: 1,
-                toHour: 23,
+                fromHour: '01:00',
+                toHour: '23:00',
             }, wednesday: {
-                fromHour: 1,
-                toHour: 23,
+                fromHour: '01:00',
+                toHour: '23:00',
             }
         },
 
         "2022-04-27",
-        "2022-04-31",
+        "2022-04-30",
+        6,
+        {"3": true}
+    ),
+    new Ad(
+        "six",
+        "/templates/temp_B.html",
+        ["text1", "text2", "text3", "text4", "text5", "text6", "text7"],
+        ["images/img1.jpg", "images/img2.jpg"],
+        {
+            monday: {
+                fromHour: '01:00',
+                toHour: '23:00',
+            }, tuesday: {
+                fromHour: '01:00',
+                toHour: '23:00',
+            }, wednesday: {
+                fromHour: '01:00',
+                toHour: '23:00',
+            }, thursday: {
+                fromHour: '17:00',
+                toHour: '20:43'
+            }
+        },
+
+        "2022-04-27",
+        "2022-04-30",
         6,
         {"3": true}
     )
 ];
 
 //////////////////////////////////////////////
-let date = new Date();
 let applicableAds = new Array();
-let timeout = 2000;
+let timeout = 0;
 let timeSet = timeout;
 let adIndex = -1;
+const iframe = document.getElementById('main_frame');
 
 $( document ).ready(function() {
-
-    //let date = new Date();
 
     //console.log(date.getDay());
     //console.log(date.getDay() in ads[0].days);
@@ -135,6 +159,7 @@ $( document ).ready(function() {
 
 function showAds() {
     console.log("change: " + timeSet);
+    let date = new Date();
     let nowDay_num = date.getDay();
     let nowDay_str;
 
@@ -148,21 +173,30 @@ function showAds() {
         case 6: nowDay_str = 'saturday'; break;
     }
     ads.forEach(ad => {
-        if (nowDay_str in ad.days || ad.days.all == true) {
+        if (ad.days.hasOwnProperty(nowDay_str) || ad.days.all == true) {
             const from_date = new Date(ad.fromDate);
             const to_date = new Date(ad.toDate);
+            let currentTime = date.getHours() + ":" + date.getMinutes();
 
-            if ((from_date <= date && date <= to_date)) {
-                if (ad.days.fromHour <= date.getHours()
-                    && date.getHours() <= ad.days.toHour) {
-                    if (!(ad in applicableAds)) {
-                        applicableAds[applicableAds.length] = ad;
+            if (from_date <= date && date <= to_date) {
+
+                if (ad.days.all == true && ad.days.fromHour <= currentTime &&
+                    currentTime <= ad.days.toHour) {
+                    if (applicableAds.indexOf(ad) == -1) {
+                        applicableAds.push(ad);
                     }
-                } else if (ad in applicableAds) {
-                    applicableAds.remove(ad);
+                } else if (ad.days.hasOwnProperty(nowDay_str) &&
+                    ad.days[nowDay_str].fromHour <= currentTime &&
+                    currentTime <= ad.days[nowDay_str].toHour){
+                    if (applicableAds.indexOf(ad) == -1) {
+                        applicableAds.push(ad);
+                    }
                 }
-            } else if (ad in applicableAds) {
-                applicableAds.remove(ad);
+                else if (applicableAds.indexOf(ad) != -1) {
+                    applicableAds.splice(applicableAds.indexOf(ad),1);
+                }
+            } else if (applicableAds.indexOf(ad) != -1) {
+                applicableAds.splice(applicableAds.indexOf(ad),1);
             }
         }
     });
@@ -170,7 +204,8 @@ function showAds() {
     clearInterval(timeout);
     if(applicableAds.length > 0){
         adIndex = (adIndex + 1) % applicableAds.length;
-        $('#main_div').load('/' + applicableAds[adIndex].templateUrl);
+        //iframe.src = applicableAds[adIndex].templateUrl;
+        $('#main_div').load(applicableAds[adIndex].templateUrl);
         timeSet = applicableAds[adIndex].timeDuration * 1000;
         timeout = setInterval(showAds,timeSet);
     } else {
@@ -179,54 +214,54 @@ function showAds() {
     }
 }
 
-        /*let nowDay_num = date.getDay();
-        let nowDay_str;
-        let nowHour = date.getHours();*/
+/*let nowDay_num = date.getDay();
+let nowDay_str;
+let nowHour = date.getHours();*/
 
-        /*switch (nowDay_num) {
-            case 0: nowDay_str = 'sunday'; break;
-            case 1: nowDay_str = 'monday'; break;
-            case 2: nowDay_str = 'tuesday'; break;
-            case 3: nowDay_str = 'wednesday'; break;
-            case 4: nowDay_str = 'thursday'; break;
-            case 5: nowDay_str = 'friday'; break;
-            case 6: nowDay_str = 'saturday'; break;
-        }*/
+/*switch (nowDay_num) {
+    case 0: nowDay_str = 'sunday'; break;
+    case 1: nowDay_str = 'monday'; break;
+    case 2: nowDay_str = 'tuesday'; break;
+    case 3: nowDay_str = 'wednesday'; break;
+    case 4: nowDay_str = 'thursday'; break;
+    case 5: nowDay_str = 'friday'; break;
+    case 6: nowDay_str = 'saturday'; break;
+}*/
 
-        /*ads.forEach(ad => {
-            const from_date = new Date(ad.fromDate);
-            const to_date = new Date(ad.toDate);
-            // emulating JavaScript forEach continue statement (same as continue)
-            if (!(from_date <= date && date <= to_date)) return;
+/*ads.forEach(ad => {
+    const from_date = new Date(ad.fromDate);
+    const to_date = new Date(ad.toDate);
+    // emulating JavaScript forEach continue statement (same as continue)
+    if (!(from_date <= date && date <= to_date)) return;
 
-            let ad_days = ad.days;
-            let ad_duration = ad.timeDuration * 1000;
-            let day_found = false
+    let ad_days = ad.days;
+    let ad_duration = ad.timeDuration * 1000;
+    let day_found = false
 
-            for (const [day, time] of Object.entries(ad.days)) {
-                console.log(day+"\n")
-                // console.log(hours+"\n")
-                console.log(time.fromHour+"\n")
+    for (const [day, time] of Object.entries(ad.days)) {
+        console.log(day+"\n")
+        // console.log(hours+"\n")
+        console.log(time.fromHour+"\n")
 
-                if('all' in ad.days) {
-                    console.log("abcdef");
-                    console.log(day+':'+time)
-                }
-                /!*
-                if (day == nowDay_str
-                    && time.fromHour <= nowHour
-                    && nowHour <= time.toHour
-                ) {
+        if('all' in ad.days) {
+            console.log("abcdef");
+            console.log(day+':'+time)
+        }
+        /!*
+        if (day == nowDay_str
+            && time.fromHour <= nowHour
+            && nowHour <= time.toHour
+        ) {
 
-                    $('#main_div').load('/' + ad.templateUrl)
-                }
-                *!/
+            $('#main_div').load('/' + ad.templateUrl)
+        }
+        *!/
 
-            }*/
+    }*/
 
 
-    /*    });
-    }, 2000);*/
+/*    });
+}, 2000);*/
 
 
 //});

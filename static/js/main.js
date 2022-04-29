@@ -22,7 +22,7 @@ let ads = [
         "one",
         "/templates/temp_A.html",
         ["text1", "text2", "text3", "text4"],
-        ["images/img1.jpg", "images/img2.jpg"],
+        ["../assets/batter hat dog", "../assets/harold.jpg"],
         {
             monday: {
                 fromHour: '06:00',
@@ -31,6 +31,10 @@ let ads = [
             wednesday: {
                 fromHour: '13:00',
                 toHour: '20:00'
+            },
+            friday: {
+                fromHour: '01:00',
+                toHour: '23:00'
             }
         },
 
@@ -42,8 +46,8 @@ let ads = [
     new Ad(
         "two",
         "/templates/temp_B.html",
-        ["text1", "text2", "text3", "text4", "text5", "text6", "text7", "text8", "text9", "text10"],
-        ["images/img1.jpg"],
+        ["text1", "text2", "text3", "text4", "text5"],
+        ["../assets/monkey-puppet-omg-shock-gif.gif"],
         {
             tuesday: {
                 fromHour: '10:00',
@@ -52,6 +56,10 @@ let ads = [
             wednesday: {
                 fromHour: '10:00',
                 toHour: '16:00'
+            },
+            friday: {
+                fromHour: '01:00',
+                toHour: '23:00'
             }
         },
         "2022-04-20",
@@ -62,12 +70,14 @@ let ads = [
     new Ad(
         "three",
         "/templates/temp_C.html",
-        [],
-        [],
+        ["Giving me the option of changing images was a mistake"],
+        ["https://media.giphy.com/media/4pMX5rJ4PYAEM/giphy.gif",
+        "https://media.giphy.com/media/Opgs8NUosTAnRSFYzc/giphy.gif",
+        "https://media.giphy.com/media/koUtwnvA3TY7C/giphy.gif"],
         {
             all: true,
             fromHour: '08:00',
-            toHour: '22:00'
+            toHour: '23:50'
         },
         "2022-04-26",
         "2022-05-01",
@@ -83,6 +93,10 @@ let ads = [
             monday: {
                 fromHour: '06:00',
                 toHour: '12:00'
+            },
+            friday: {
+                fromHour: '01:00',
+                toHour: '23:00'
             }
         },
         "2022-04-27",
@@ -93,8 +107,8 @@ let ads = [
     new Ad(
         "five",
         "/templates/temp_B.html",
-        ["text1", "text2", "text3", "text4", "text5", "text6", "text7"],
-        ["images/img1.jpg", "images/img2.jpg"],
+        ["text1", "text2", "text3", "text4", "text5"],
+        ["![](../assets/good shit2.jpg)", "../assets/NO.gif"],
         {
             monday: {
                 fromHour: '01:00',
@@ -105,6 +119,14 @@ let ads = [
             }, wednesday: {
                 fromHour: '01:00',
                 toHour: '23:00',
+            },
+            friday: {
+                fromHour: '01:00',
+                toHour: '23:40'
+            },
+            saturday: {
+                fromHour: '00:00',
+                toHour: '23:00'
             }
         },
 
@@ -116,8 +138,8 @@ let ads = [
     new Ad(
         "six",
         "/templates/temp_B.html",
-        ["text1", "text2", "text3", "text4", "text5", "text6", "text7"],
-        ["images/img1.jpg", "images/img2.jpg"],
+        ["text1", "text2", "text3"],
+        ["../assets/shrook.jpg", "../assets/simba_approved.jpg"],
         {
             monday: {
                 fromHour: '01:00',
@@ -129,8 +151,12 @@ let ads = [
                 fromHour: '01:00',
                 toHour: '23:00',
             }, thursday: {
-                fromHour: '17:00',
+                fromHour: '01:00',
                 toHour: '20:43'
+            },
+            friday: {
+                fromHour: '01:00',
+                toHour: '23:00'
             }
         },
 
@@ -146,7 +172,6 @@ let applicableAds = new Array();
 let timeout = 0;
 let timeSet = timeout;
 let adIndex = -1;
-const iframe = document.getElementById('main_frame');
 
 $( document ).ready(function() {
 
@@ -154,20 +179,34 @@ $( document ).ready(function() {
 
 });
 
-function showAds() {
+async function showAds() {
     console.log("change: " + timeSet);
     let date = new Date();
     let nowDay_num = date.getDay();
     let nowDay_str;
 
     switch (nowDay_num) {
-        case 0: nowDay_str = 'sunday'; break;
-        case 1: nowDay_str = 'monday'; break;
-        case 2: nowDay_str = 'tuesday'; break;
-        case 3: nowDay_str = 'wednesday'; break;
-        case 4: nowDay_str = 'thursday'; break;
-        case 5: nowDay_str = 'friday'; break;
-        case 6: nowDay_str = 'saturday'; break;
+        case 0:
+            nowDay_str = 'sunday';
+            break;
+        case 1:
+            nowDay_str = 'monday';
+            break;
+        case 2:
+            nowDay_str = 'tuesday';
+            break;
+        case 3:
+            nowDay_str = 'wednesday';
+            break;
+        case 4:
+            nowDay_str = 'thursday';
+            break;
+        case 5:
+            nowDay_str = 'friday';
+            break;
+        case 6:
+            nowDay_str = 'saturday';
+            break;
     }
     ads.forEach(ad => {
         if (ad.days.hasOwnProperty(nowDay_str) || ad.days.all == true) {
@@ -184,29 +223,79 @@ function showAds() {
                     }
                 } else if (ad.days.hasOwnProperty(nowDay_str) &&
                     ad.days[nowDay_str].fromHour <= currentTime &&
-                    currentTime <= ad.days[nowDay_str].toHour){
+                    currentTime <= ad.days[nowDay_str].toHour) {
                     if (applicableAds.indexOf(ad) == -1) {
                         applicableAds.push(ad);
                     }
-                }
-                else if (applicableAds.indexOf(ad) != -1) {
-                    applicableAds.splice(applicableAds.indexOf(ad),1);
+                } else if (applicableAds.indexOf(ad) != -1) {
+                    applicableAds.splice(applicableAds.indexOf(ad), 1);
                 }
             } else if (applicableAds.indexOf(ad) != -1) {
-                applicableAds.splice(applicableAds.indexOf(ad),1);
+                applicableAds.splice(applicableAds.indexOf(ad), 1);
             }
         }
     });
 
     clearInterval(timeout);
-    if(applicableAds.length > 0){
+    if (applicableAds.length > 0) {
         adIndex = (adIndex + 1) % applicableAds.length;
-        //iframe.src = applicableAds[adIndex].templateUrl;
-        $('#main_div').load(applicableAds[adIndex].templateUrl);
-        timeSet = applicableAds[adIndex].timeDuration * 1000;
-        timeout = setInterval(showAds,timeSet);
+
+        //$('#main_div').load(applicableAds[adIndex].templateUrl);
+        //await setAdParams(applicableAds[adIndex]);
+        let ad = applicableAds[adIndex];
+        let iframe = document.getElementById('main_frame');
+        iframe.src = ad.templateUrl;
+        iframe.onload = () => {
+            let adName = iframe.contentWindow.document.getElementById("ad-name");
+            adName.innerHTML = ad.name;
+            //iframe.width  = iframe.contentWindow.document.body.scrollWidth;
+            //iframe.height = iframe.contentWindow.document.body.scrollHeight;
+            let textAmount = ad.texts.length + 1;
+            let imgAmount = ad.imagesUrl.length + 1;
+            let textReference;
+            let imgReference;
+            //let mainDiv = document.getElementById('main_div');
+
+            for (let textIter = 1; textIter < textAmount; textIter++) {
+                textReference = iframe.contentWindow.document.getElementById('text' + textIter);
+                textReference.innerHTML = ad.texts[textIter - 1];
+            }
+
+            for (let imgIter = 1; imgIter < imgAmount; imgIter++) {
+                imgReference = iframe.contentWindow.document.getElementById('img' + imgIter);
+                imgReference.src = ad.imagesUrl[imgIter - 1];
+            }
+
+            timeSet = applicableAds[adIndex].timeDuration * 1000;
+            timeout = setInterval(showAds, timeSet);
+        }
     } else {
         timeSet = 2000;
-        timeout = setInterval(showAds,timeSet);
+        timeout = setInterval(showAds, timeSet);
     }
 }
+/*
+async function setAdParams(ad) {
+
+    let textAmount = ad.texts.length + 1;
+    let imgAmount  = ad.imagesUrl.length + 1;
+    let textReference;
+    let imgReference;
+    //let mainDiv = document.getElementById('main_div');
+    let adName = iframe.contentWindow.document.getElementById("ad-name");
+    adName.innerHTML = ad.name;
+
+    for (let textIter = 1;textIter < textAmount; textIter++){
+        textReference = iframe.contentWindow.document.getElementById('text'+textIter);
+        textReference.innerHTML = ad.texts[textIter - 1];
+    }
+
+    for (let imgIter = 1;imgIter < imgAmount; imgIter++){
+        imgReference = iframe.contentWindow.document.getElementById('img'+imgIter);
+        imgReference.src = ad.imagesUrl[imgIter - 1];
+    }
+
+    timeSet = applicableAds[adIndex].timeDuration * 1000;
+    timeout = setInterval(showAds,timeSet);
+    return this;
+}*/

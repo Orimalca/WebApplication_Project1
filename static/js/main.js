@@ -22,7 +22,7 @@ let ads = [
         "one",
         "/templates/temp_A.html",
         ["text1", "text2", "text3", "text4"],
-        ["../assets/batter hat dog", "../assets/harold.jpg"],
+        ["../static/assets/batterhatdog.jpg", "../static/assets/harold.jpg"],
         {
             monday: {
                 fromHour: '06:00',
@@ -39,7 +39,7 @@ let ads = [
         },
 
         "2022-04-01",
-        "2022-04-31",
+        "2022-08-31",
         3,
         {"1": true, "2":true}
     ),
@@ -47,7 +47,7 @@ let ads = [
         "two",
         "/templates/temp_B.html",
         ["text1", "text2", "text3", "text4", "text5"],
-        ["../assets/monkey-puppet-omg-shock-gif.gif"],
+        ["../static/assets/monkey-puppet-omg-shock-gif.gif"],
         {
             tuesday: {
                 fromHour: '10:00',
@@ -63,7 +63,7 @@ let ads = [
             }
         },
         "2022-04-20",
-        "2022-04-31",
+        "2022-08-31",
         5,
         {"1": true, "3": true}
     ),
@@ -80,7 +80,7 @@ let ads = [
             toHour: '23:50'
         },
         "2022-04-26",
-        "2022-05-01",
+        "2022-08-01",
         7,
         {"2": true, "3": true}
     ),
@@ -100,7 +100,7 @@ let ads = [
             }
         },
         "2022-04-27",
-        "2022-04-28",
+        "2022-08-28",
         4,
         {"1": true}
     ),
@@ -108,7 +108,7 @@ let ads = [
         "five",
         "/templates/temp_B.html",
         ["text1", "text2", "text3", "text4", "text5"],
-        ["![](../assets/good shit2.jpg)", "../assets/NO.gif"],
+        ["../static/assets/good shit2.jpg", "../static/assets/NO.gif"],
         {
             monday: {
                 fromHour: '01:00',
@@ -131,7 +131,7 @@ let ads = [
         },
 
         "2022-04-27",
-        "2022-04-30",
+        "2022-08-30",
         6,
         {"3": true}
     ),
@@ -139,7 +139,7 @@ let ads = [
         "six",
         "/templates/temp_B.html",
         ["text1", "text2", "text3"],
-        ["../assets/shrook.jpg", "../assets/simba_approved.jpg"],
+        ["../static/assets/shrook.jpg", "../static/assets/simba_approved.jpg"],
         {
             monday: {
                 fromHour: '01:00',
@@ -161,7 +161,7 @@ let ads = [
         },
 
         "2022-04-27",
-        "2022-04-30",
+        "2022-08-30",
         6,
         {"3": true}
     )
@@ -240,13 +240,12 @@ async function showAds() {
     if (applicableAds.length > 0) {
         adIndex = (adIndex + 1) % applicableAds.length;
 
-        //$('#main_div').load(applicableAds[adIndex].templateUrl);
         //await setAdParams(applicableAds[adIndex]);
         let ad = applicableAds[adIndex];
-        let iframe = document.getElementById('main_frame');
-        iframe.src = ad.templateUrl;
-        iframe.onload = () => {
-            let adName = iframe.contentWindow.document.getElementById("ad-name");
+        //let iframe = document.getElementById('main_frame');
+        let mainDiv = document.getElementById('main_div');
+        $('#main_div').load(applicableAds[adIndex].templateUrl,() =>{
+            let adName = document.getElementById("ad-name");
             adName.innerHTML = ad.name;
             //iframe.width  = iframe.contentWindow.document.body.scrollWidth;
             //iframe.height = iframe.contentWindow.document.body.scrollHeight;
@@ -254,48 +253,37 @@ async function showAds() {
             let imgAmount = ad.imagesUrl.length + 1;
             let textReference;
             let imgReference;
-            //let mainDiv = document.getElementById('main_div');
+            
 
             for (let textIter = 1; textIter < textAmount; textIter++) {
-                textReference = iframe.contentWindow.document.getElementById('text' + textIter);
+                //textReference = iframe.contentWindow.document.getElementById('text' + textIter);
+                textReference = document.getElementById('text' + textIter);
                 textReference.innerHTML = ad.texts[textIter - 1];
+                //textReference.style.visibility="visible";
             }
 
             for (let imgIter = 1; imgIter < imgAmount; imgIter++) {
-                imgReference = iframe.contentWindow.document.getElementById('img' + imgIter);
+                //imgReference = iframe.contentWindow.document.getElementById('img' + imgIter);
+                imgReference = document.getElementById('img' + imgIter);
                 imgReference.src = ad.imagesUrl[imgIter - 1];
+                //imgReference.visibility="visible";
+                //$('img' + imgIter).toggle();
+                imgReference.style = "display: ;"
             }
 
             timeSet = applicableAds[adIndex].timeDuration * 1000;
             timeout = setInterval(showAds, timeSet);
-        }
+        });
+        
+        //iframe.src = ad.templateUrl;
+        //iframe.onload = () => {
+
+
+
+            
+        //}
     } else {
         timeSet = 2000;
         timeout = setInterval(showAds, timeSet);
     }
 }
-/*
-async function setAdParams(ad) {
-
-    let textAmount = ad.texts.length + 1;
-    let imgAmount  = ad.imagesUrl.length + 1;
-    let textReference;
-    let imgReference;
-    //let mainDiv = document.getElementById('main_div');
-    let adName = iframe.contentWindow.document.getElementById("ad-name");
-    adName.innerHTML = ad.name;
-
-    for (let textIter = 1;textIter < textAmount; textIter++){
-        textReference = iframe.contentWindow.document.getElementById('text'+textIter);
-        textReference.innerHTML = ad.texts[textIter - 1];
-    }
-
-    for (let imgIter = 1;imgIter < imgAmount; imgIter++){
-        imgReference = iframe.contentWindow.document.getElementById('img'+imgIter);
-        imgReference.src = ad.imagesUrl[imgIter - 1];
-    }
-
-    timeSet = applicableAds[adIndex].timeDuration * 1000;
-    timeout = setInterval(showAds,timeSet);
-    return this;
-}*/

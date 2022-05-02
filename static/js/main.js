@@ -253,6 +253,7 @@ async function showAds() {
             let imgAmount = ad.imagesUrl.length + 1;
             let textReference;
             let imgReference;
+            $('img').hide();
             
 
             for (let textIter = 1; textIter < textAmount; textIter++) {

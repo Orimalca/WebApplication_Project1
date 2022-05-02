@@ -55,7 +55,7 @@ let ads = [
             }
         },
         "2022-04-20",
-        "2022-04-31",
+        "2022-05-23",
         5,
         {"1": true, "3": true}
     ),
@@ -71,7 +71,7 @@ let ads = [
             }
         },
         "2022-04-26",
-        "2022-05-01",
+        "2022-05-25",
         7,
         {"2": true, "3": true}
     ),
@@ -118,38 +118,50 @@ let ads = [
 
 //////////////////////////////////////////////
 
+
+function dateValid(currentDate, ad_fromDate, ad_toDate) {
+    if (!(ad_fromDate <= currentDate && currentDate <= ad_toDate)) return true;
+}
+
+function dayValid(currentDay, ad_day) { if(ad_day == 'all' || ad_day == currentDay) return true; }
+
+function hoursValid(currentHour, ad_fromHour, ad_toHour) {
+    if(ad_fromHour <= currentHour && currentHour <= ad_toHour) return true;
+}
+
+
+let adsStack = []
+
+
+function showAdd(ad) {
+
+}
+
+
 $( document ).ready(() => {
     let interval_id
 
-    setInterval(() => {
-        let date = new Date();
-        let nowDay_num = date.getDay();
-        let nowDay_str;
-        let nowHour = date.getHours();
 
-        switch (nowDay_num) {
-            case 0: nowDay_str = 'sunday'; break;
-            case 1: nowDay_str = 'monday'; break;
-            case 2: nowDay_str = 'tuesday'; break;
-            case 3: nowDay_str = 'wednesday'; break;
-            case 4: nowDay_str = 'thursday'; break;
-            case 5: nowDay_str = 'friday'; break;
-            case 6: nowDay_str = 'saturday'; break;
+    setInterval(() => {
+        let currentDate = new Date();
+        let currentDay = currentDate.getDay();
+        let currentHour = currentDate.getHours();
+
+        switch (currentDay) {
+            case 0: currentDay = 'sunday'; break;
+            case 1: currentDay = 'monday'; break;
+            case 2: currentDay = 'tuesday'; break;
+            case 3: currentDay = 'wednesday'; break;
+            case 4: currentDay = 'thursday'; break;
+            case 5: currentDay = 'friday'; break;
+            case 6: currentDay = 'saturday'; break;
         }
 
         ads.forEach(ad => {
-            const from_date = new Date(ad.fromDate);
-            const to_date = new Date(ad.toDate);
-            if (!(from_date <= date && date <= to_date)) return; // emulating JavaScript forEach continue statement (same as continue)
-
-            let ad_days = ad.days;
-            let ad_duration = ad.timeDuration * 1000;
-            let day_found = false
+            if(dateValid(currentDate, new Date(ad.fromDate), new Date(ad.toDate))) return; // emulating JavaScript forEach continue statement (same as continue)
 
             for (const [day, time] of Object.entries(ad.days)) {
-                if((day == 'all' || day == nowDay_str)
-                    && (time.fromHour <= nowHour && nowHour <= time.toHour)
-                ) {
+                if(dayValid(currentDay, day)  && (hoursValid(currentHour, time.fromHour, time.toHour))) {
                     $('#main_div').load('/' + ad.templateUrl, () => {
                         interval_id = setInterval(() => {
                             let random = Math.floor(Math.random() * ad.imagesUrl.length)
@@ -171,13 +183,3 @@ $( document ).ready(() => {
 });
 
 
-/*
-if (w <=920 && w > 480){
-      setInterval(() => {
-        let random = Math.floor(Math.random() * 3);
-        image.src = commercialsMedium[random].src;
-        p.innerHTML = commercialsMedium[random].text;
-        card.style = "width: 35rem; height: 35rem;"
-      }, 2000);
-    }
-*/

@@ -26,14 +26,21 @@ let ads = [
         {
             monday: {
                 fromHour: '06:00',
-                toHour: '12:00'
+                toHour: '18:36'
             },
             wednesday: {
-                fromHour: '13:00',
-                toHour: '20:00'
+                fromHour: '1:00',
+                toHour: '23:00'
+            }, thursday: {
+                fromHour: '00:00',
+                toHour: '23:59'
             },
             friday: {
                 fromHour: '01:00',
+                toHour: '23:00'
+            },
+            saturday: {
+                fromHour: '00:00',
                 toHour: '23:00'
             }
         },
@@ -49,13 +56,17 @@ let ads = [
         ["text1", "text2", "text3", "text4", "text5"],
         ["../static/assets/monkey-puppet-omg-shock-gif.gif"],
         {
+            sunday: {
+                fromHour: '00:00',
+                toHour: '23:59'
+            },
             tuesday: {
-                fromHour: '10:00',
-                toHour: '16:00'
+                fromHour: '01:00',
+                toHour: '23:59'
             },
             wednesday: {
-                fromHour: '10:00',
-                toHour: '16:00'
+                fromHour: '01:00',
+                toHour: '23:59'
             },
             friday: {
                 fromHour: '01:00',
@@ -76,7 +87,7 @@ let ads = [
         "https://media.giphy.com/media/koUtwnvA3TY7C/giphy.gif"],
         {
             all: true,
-            fromHour: '08:00',
+            fromHour: '00:00',
             toHour: '23:50'
         },
         "2022-04-26",
@@ -88,11 +99,19 @@ let ads = [
         "four",
         "/templates/temp_A.html",
         ["text1", "text2"],
-        [],
+        ["https://media.giphy.com/media/IfyjWLQMeF6kbG2r0z/giphy.gif"],
         {
+            sunday: {
+                fromHour: '00:00',
+                toHour: '23:59'
+            },
             monday: {
-                fromHour: '06:00',
-                toHour: '12:00'
+                fromHour: '00:00',
+                toHour: '23:59'
+            },
+            tuesday:{
+                fromHour: '01:00',
+                toHour: '23:00'
             },
             friday: {
                 fromHour: '01:00',
@@ -101,7 +120,7 @@ let ads = [
         },
         "2022-04-27",
         "2022-08-28",
-        4,
+        7,
         {"1": true}
     ),
     new Ad(
@@ -120,10 +139,6 @@ let ads = [
                 fromHour: '01:00',
                 toHour: '23:00',
             },
-            friday: {
-                fromHour: '01:00',
-                toHour: '23:40'
-            },
             saturday: {
                 fromHour: '00:00',
                 toHour: '23:00'
@@ -132,7 +147,7 @@ let ads = [
 
         "2022-04-27",
         "2022-08-30",
-        6,
+        10,
         {"3": true}
     ),
     new Ad(
@@ -151,11 +166,11 @@ let ads = [
                 fromHour: '01:00',
                 toHour: '23:00',
             }, thursday: {
-                fromHour: '01:00',
-                toHour: '20:43'
+                fromHour: '00:00',
+                toHour: '23:59'
             },
-            friday: {
-                fromHour: '01:00',
+            saturday: {
+                fromHour: '00:00',
                 toHour: '23:00'
             }
         },
@@ -180,7 +195,7 @@ $( document ).ready(function() {
 });
 
 async function showAds() {
-    console.log("change: " + timeSet);
+    console.log("milliseconds waited: " + timeSet);
     let date = new Date();
     let nowDay_num = date.getDay();
     let nowDay_str;

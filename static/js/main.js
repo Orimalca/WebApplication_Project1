@@ -25,7 +25,7 @@ let ads = [
         ["../static/assets/batterhatdog.jpg", "../static/assets/harold.jpg"],
         {
             monday: {
-                fromHour: '06:00',
+                fromHour: '00:00',
                 toHour: '18:36'
             },
             wednesday: {

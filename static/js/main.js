@@ -26,22 +26,22 @@ let ads = [
         {
             monday: {
                 fromHour: '00:00',
-                toHour: '18:36'
+                toHour: '23:59'
             },
             wednesday: {
-                fromHour: '1:00',
-                toHour: '23:00'
+                fromHour: '00:00',
+                toHour: '23:59'
             }, thursday: {
                 fromHour: '00:00',
                 toHour: '23:59'
             },
             friday: {
-                fromHour: '01:00',
-                toHour: '23:00'
+                fromHour: '00:00',
+                toHour: '23:59'
             },
             saturday: {
                 fromHour: '00:00',
-                toHour: '23:00'
+                toHour: '23:59'
             }
         },
 
@@ -61,16 +61,16 @@ let ads = [
                 toHour: '23:59'
             },
             tuesday: {
-                fromHour: '01:00',
+                fromHour: '00:00',
                 toHour: '23:59'
             },
             wednesday: {
-                fromHour: '01:00',
+                fromHour: '00:00',
                 toHour: '23:59'
             },
             friday: {
-                fromHour: '01:00',
-                toHour: '23:00'
+                fromHour: '00:00',
+                toHour: '23:59'
             }
         },
         "2022-04-20",
@@ -88,7 +88,7 @@ let ads = [
         {
             all: true,
             fromHour: '00:00',
-            toHour: '23:50'
+            toHour: '23:59'
         },
         "2022-04-26",
         "2022-08-01",
@@ -110,12 +110,12 @@ let ads = [
                 toHour: '23:59'
             },
             tuesday:{
-                fromHour: '01:00',
-                toHour: '23:00'
+                fromHour: '00:00',
+                toHour: '23:59'
             },
             friday: {
-                fromHour: '01:00',
-                toHour: '23:00'
+                fromHour: '00:00',
+                toHour: '23:59'
             }
         },
         "2022-04-27",
@@ -130,18 +130,18 @@ let ads = [
         ["../static/assets/good shit2.jpg", "../static/assets/NO.gif"],
         {
             monday: {
-                fromHour: '01:00',
-                toHour: '23:00',
+                fromHour: '00:00',
+                toHour: '23:59',
             }, tuesday: {
-                fromHour: '01:00',
-                toHour: '23:00',
+                fromHour: '00:00',
+                toHour: '23:59',
             }, wednesday: {
-                fromHour: '01:00',
-                toHour: '23:00',
+                fromHour: '00:00',
+                toHour: '23:59',
             },
             saturday: {
                 fromHour: '00:00',
-                toHour: '23:00'
+                toHour: '23:59'
             }
         },
 

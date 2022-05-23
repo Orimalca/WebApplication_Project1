@@ -1,7 +1,5 @@
 "use strict"
 
-
-
 class Ad {
     constructor(name, templateUrl, texts, imagesUrl, days, fromDate, toDate, timeDuration, screens) {
         this.name = name
@@ -15,12 +13,11 @@ class Ad {
         this.screens = screens
     }
 }
-
-
+/*
 let ads = [
     new Ad(
         "one",
-        "/templates/temp_A.html",
+        "temp_A",
         ["text1", "text2", "text3", "text4"],
         ["../static/assets/batterhatdog.jpg", "../static/assets/harold.jpg"],
         {
@@ -52,7 +49,7 @@ let ads = [
     ),
     new Ad(
         "two",
-        "/templates/temp_B.html",
+        "temp_B",
         ["text1", "text2", "text3", "text4", "text5"],
         ["../static/assets/monkey-puppet-omg-shock-gif.gif"],
         {
@@ -80,11 +77,11 @@ let ads = [
     ),
     new Ad(
         "three",
-        "/templates/temp_C.html",
+        "temp_C",
         ["Giving me the option of changing images was a mistake"],
         ["https://media.giphy.com/media/4pMX5rJ4PYAEM/giphy.gif",
-        "https://media.giphy.com/media/Opgs8NUosTAnRSFYzc/giphy.gif",
-        "https://media.giphy.com/media/koUtwnvA3TY7C/giphy.gif"],
+            "https://media.giphy.com/media/Opgs8NUosTAnRSFYzc/giphy.gif",
+            "https://media.giphy.com/media/koUtwnvA3TY7C/giphy.gif"],
         {
             all: true,
             fromHour: '00:00',
@@ -97,7 +94,7 @@ let ads = [
     ),
     new Ad(
         "four",
-        "/templates/temp_A.html",
+        "temp_A",
         ["text1", "text2"],
         ["https://media.giphy.com/media/IfyjWLQMeF6kbG2r0z/giphy.gif"],
         {
@@ -125,7 +122,7 @@ let ads = [
     ),
     new Ad(
         "five",
-        "/templates/temp_B.html",
+        "temp_B",
         ["text1", "text2", "text3", "text4", "text5"],
         ["../static/assets/good shit2.jpg", "../static/assets/NO.gif"],
         {
@@ -152,7 +149,7 @@ let ads = [
     ),
     new Ad(
         "six",
-        "/templates/temp_B.html",
+        "temp_B",
         ["text1", "text2", "text3"],
         ["../static/assets/shrook.jpg", "../static/assets/simba_approved.jpg"],
         {
@@ -181,6 +178,12 @@ let ads = [
         {"3": true}
     )
 ];
+*/
+
+let ads;
+$.get( window.location.pathname + 'ads', function( data ) {
+    ads = data;
+});
 
 //////////////////////////////////////////////
 let applicableAds = new Array();
@@ -261,6 +264,7 @@ async function showAds() {
         let mainDiv = document.getElementById('main_div');
         $('#main_div').load(applicableAds[adIndex].templateUrl,() =>{
             let adName = document.getElementById("ad-name");
+            console.log(ad.screens);
             adName.innerHTML = ad.name;
             //iframe.width  = iframe.contentWindow.document.body.scrollWidth;
             //iframe.height = iframe.contentWindow.document.body.scrollHeight;

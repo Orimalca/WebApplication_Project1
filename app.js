@@ -1,33 +1,46 @@
-const express = require('express');
-const path = require('path')
-// const ads = require()
-
-
-
+const http = require('http')
+const port = 3000
+const express = require('express')
 const app = express()
-app.use(express.static(__dirname+"/static/"));
+const fs = require('fs')
+const server = http.createServer(app).listen(port)
 
+app.use(express.static(__dirname+"/static/js"));
+app.use(express.static(__dirname+"/static/templates"));
+app.use(express.static(__dirname+"/static/assets"));
 
-app.get('/', (req, res) => {
-    res.status(200).sendFile(path.resolve(__dirname, "./templates/index.html"));
-    // res.render(__dirname + "/templates/index.html");
-    // res.end()
-});
+let allAds = fs.readFileSync('ads.json')
+let Ads = JSON.parse(allAds)
 
+app.get('/',(req, res) => {
+    res.sendFile(__dirname + "/templates/index.html");
+})
+app.get('/ads',(req, res) => {
+    res.cookie('cookies',{samesite:'none'})
+    res.json(Ads);
+})
 
-const screens_numbers = [1,2,3,4,5,6,7];
-screens_numbers.forEach((endPoint) => {
-    app.get('/screen='+endPoint, (req, res) => {
-        // ads ---> ads_new
+const temp_type = ['A','B','C'];
 
-        // res.render('/screen='+endPoint);
-        res.sendFile(__dirname + "/templates/index.html")
+temp_type.forEach((endPoint) => {
+    app.get('/temp_'+endPoint, (req, res) => {
+        res.sendFile(__dirname + '/templates/temp_'+endPoint+'.html')
     });
 });
 
+const screens_numbers = [1,2,3];
 
-app.listen(8080);
-
-
-
-
+screens_numbers.forEach((endPoint) => {
+    app.get('/screen=' + endPoint, (req, res) => {
+        res.sendFile(__dirname + "/templates/index.html");
+    });
+    app.get('/screen=' + endPoint+ 'ads', (req, res) => {
+        let ads = [];
+        for (let i = 0; i < Ads.length; i++) {
+            if (Ads[i].screens.includes(endPoint)) {
+                ads[ads.length] =Ads[i];
+            }
+        }
+        res.json(ads);
+    });
+});

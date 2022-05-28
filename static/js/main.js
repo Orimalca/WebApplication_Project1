@@ -256,6 +256,9 @@ async function showAds() {
 
     clearInterval(timeout);
     if (applicableAds.length > 0) {
+        if (adIndex === -1){
+            adIndex = Math.floor(Math.random() * applicableAds.length) - 1;
+        }
         adIndex = (adIndex + 1) % applicableAds.length;
 
         //await setAdParams(applicableAds[adIndex]);

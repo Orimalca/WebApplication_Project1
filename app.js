@@ -4,14 +4,15 @@ const express = require('express');
 const app     = express();
 const fs      = require('fs');
 const server  = http.createServer(app).listen(port);
+const adsPath = 'ads.json';
 
 app.use(express.static(__dirname+"/static/js"));
 app.use(express.static(__dirname+"/static/templates"));
 app.use(express.static(__dirname+"/static/assets"));
 
-let allAds = fs.readFileSync('ads.json');
+let allAds = fs.readFileSync(adsPath);
 let Ads    = JSON.parse(allAds);
-let screen_number = 0;
+let screen_number;
 
 app.get('/',(req, res) => {
     screen_number = 0;

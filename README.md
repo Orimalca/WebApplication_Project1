@@ -5,7 +5,7 @@ Steps to activate the project:
 1. Open the project's folder in cmd and run the command
     "npm install"
 2. In the same folder run the command "Node app.js"
-3. Enter your preferred browser and go to "http://localhost:8080" or click the link
+3. Enter your preferred browser and go to "http://localhost:8080"
 
 Additional Info:
 1. The file "ads.json" contains all the ads that will be shown,
@@ -17,4 +17,7 @@ Additional Info:
     the file contains ads that should work at almost any hour at any date
     to use this file instead simply backup "ads.json" to a different folder
     and change the file name of: "altads.json" to: "ads.json"
-3. The "altads.json" contains ads that should be active until 2032
+3. The "altads.json" contains ads that should be active until the year 2032
+4. Ads with specific screen types can be shown by appending to the URL
+    /screen=number for example http://localhost:8080/screen=1
+    currently supported screens are 1, 2 and 3

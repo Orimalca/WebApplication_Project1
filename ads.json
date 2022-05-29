@@ -1,0 +1,96 @@
+[
+	{
+		"name":"one",
+		"templateUrl":"temp_A",
+		"texts":["text1", "text2", "text3", "text4"],
+		"imagesUrl":["/batterhatdog.jpg", "harold.jpg"],
+		"days":{
+            "monday": {
+                "fromHour": "06:00",
+                "toHour": "12:00"
+            },
+            "wednesday": {
+                "fromHour": "13:00",
+                "toHour": "20:00"
+            }
+        },
+		"fromDate":"2022-01-01",
+		"toDate":"2022-12-31",
+		"timeDuration":5,
+        "screens":[1,2]
+	},
+	{
+		"name":"two",
+		"templateUrl":"temp_B",
+		"texts":["text1", "text2", "text3", "text4", "text5","text6","text7","text8","text9","last text"],
+		"imagesUrl":["/monkey-puppet-omg-shock-gif.gif"],
+		"days":{
+            "tuesday": {
+              "fromHour": "10:00",
+              "toHour": "16:00"
+            },
+            "wednesday": {
+              "fromHour": "10:00",
+              "toHour": "16:00"
+            }
+        },
+		"fromDate":"2022-03-01",
+		"toDate":"2022-04-30",
+		"timeDuration":5,
+        "screens":[1,3]
+	},
+	{
+		"name":"three",
+		"templateUrl":"temp_C",
+		"texts":[],
+		"imagesUrl":[],
+		"days":{
+            "all": true,
+			"fromHour": "08:00",
+			"toHour": "22:00"
+        },
+		"fromDate":"2022-05-01",
+		"toDate":"2022-06-15",
+		"timeDuration":7,
+        "screens":[2,3]
+	},
+	{
+		"name":"four",
+		"templateUrl":"temp_A",
+		"texts":["text1", "text2"],
+		"imagesUrl":[],
+		"days":{
+            "monday": {
+              "fromHour": "15:00",
+              "toHour": "19:00"
+            }
+        },
+		"fromDate":"2022-03-29",
+		"toDate":"2022-04-15",
+		"timeDuration":7,
+        "screens":[1]
+	},
+	{
+		"name":"five",
+		"templateUrl":"temp_B",
+		"texts":["text1", "text2", "text3", "text4", "text5","It's over anakin", "I have the high ground"],
+		"imagesUrl":["/good shit2.jpg", "NO.gif"],
+		"days":{
+            "monday": {
+              "fromHour": "01:00",
+              "toHour": "23:00"
+            },
+			"tuesday": {
+              "fromHour": "01:00",
+              "toHour": "23:00"
+            },
+            "wednesday": {
+              "fromHour": "01:00",
+              "toHour": "23:00"
+            }
+        },
+		"fromDate":"2022-04-01",
+		"toDate":"2022-04-30",
+		"timeDuration":11,
+        "screens":[3]
+	}]

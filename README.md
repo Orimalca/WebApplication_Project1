@@ -3,7 +3,7 @@ exercise 2
 
 Steps to activate the project:
 1. Open the project's folder in cmd and run the command
-    "npm install"
+    "npm install" (package.json is included thus running "npm install" will install the necessary node_modules)
 2. In the same folder run the command "Node app.js"
 3. Enter your preferred browser and go to "http://localhost:8080"
 
